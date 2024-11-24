@@ -22,10 +22,9 @@ class Program
         string movement = "RIGHT";
         List<int> fields = new List<int>();
         int score = 0;
-        List<int> teljePositie = new List<int>();
-        teljePositie.Add(pixel.XPos);
-        teljePositie.Add(pixel.YPos);
-        DateTime tijd = DateTime.Now;
+        List<int> fieldsPositions = new List<int>();
+        fieldsPositions.Add(pixel.XPos);
+        fieldsPositions.Add(pixel.YPos);
         string obstacle = "*";
         int obstacleXpos = randomNumber.Next(1, screenWidth);
         int obstacleYpos = randomNumber.Next(1, windowHeight);
@@ -117,10 +116,10 @@ class Program
                 obstacleYpos = randomNumber.Next(1, windowHeight);
             }
 
-            teljePositie.Insert(0, pixel.XPos);
-            teljePositie.Insert(1, pixel.YPos);
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-            teljePositie.RemoveAt(teljePositie.Count - 1);
+            fieldsPositions.Insert(0, pixel.XPos);
+            fieldsPositions.Insert(1, pixel.YPos);
+            fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
+            fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
             //Kollision mit Wände oder mit sich selbst
             if (pixel.XPos == 0 || pixel.XPos == screenWidth - 1 || pixel.YPos == 0 || pixel.YPos == windowHeight - 1)
             {
