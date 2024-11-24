@@ -26,6 +26,7 @@ class Program
         fieldsPositions.Add(pixel.XPos);
         fieldsPositions.Add(pixel.YPos);
         string obstacle = "*";
+        
         int obstacleXpos = randomNumber.Next(1, screenWidth);
         int obstacleYpos = randomNumber.Next(1, windowHeight);
         
