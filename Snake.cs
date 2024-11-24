@@ -21,13 +21,13 @@ class Program
 
         Random randomnummer = new Random();
 
-        pixel hoofd = new pixel();
+        Pixel pixel = new Pixel();
 
-        hoofd.xpos = screenwidth / 2;
+        pixel.xPos = screenwidth / 2;
 
-        hoofd.ypos = screenheight / 2;
+        pixel.yPos = screenheight / 2;
 
-        hoofd.schermkleur = ConsoleColor.Red;
+        pixel.Colour = ConsoleColor.Red;
 
         string movement = "RIGHT";
 
@@ -35,23 +35,15 @@ class Program
 
         int score = 0;
 
-        Pixel hoofd = new Pixel();
-
-        hoofd.xPos = screenwidth / 2;
-
-        hoofd.yPos = screenheight / 2;
-
-        hoofd.schermKleur = ConsoleColor.Red;
-
 
 
         List<int> teljePositie = new List<int>();
 
 
 
-        teljePositie.Add(hoofd.xPos);
+        teljePositie.Add(pixel.xPos);
 
-        teljePositie.Add(hoofd.yPos);
+        teljePositie.Add(pixel.yPos);
 
 
 
@@ -81,7 +73,7 @@ class Program
 
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
 
             Console.Write("■");
 
@@ -129,7 +121,7 @@ class Program
 
             }
 
-            Console.ForegroundColor =  /* ?? */;
+            Console.ForegroundColor = ConsoleColor.Magenta;
 
             Console.WriteLine("Score: " + score);
 
@@ -149,19 +141,19 @@ class Program
 
             //Draw Snake
 
-            Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
 
             Console.Write("■");
 
-            Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
 
             Console.Write("■");
 
-            Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
 
             Console.Write("■");
 
-            Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
 
             Console.Write("■");
 
@@ -185,7 +177,7 @@ class Program
 
                     movement = "DOWN";
 
-                    // ???
+                    break;
 
                 case ConsoleKey.LeftArrow:
 
@@ -203,23 +195,23 @@ class Program
 
             if (movement == "UP")
 
-                hoofd.yPos--;
+                pixel.yPos--;
 
             if (movement == "DOWN")
 
-                hoofd.yPos++;
+                pixel.yPos++;
 
             if (movement == "LEFT")
 
-                hoofd.xPos--;
+                pixel.xPos--;
 
             if (movement == "RIGHT")
 
-                hoofd.xPos++;
+                pixel.xPos++;
 
             //Hindernis treffen
 
-            if (hoofd.xPos == obstacleXpos /* ?? */ == obstacleYpos)
+            if (pixel.xPos == obstacleXpos && pixel.yPos == obstacleYpos)
 
             {
 
@@ -231,9 +223,9 @@ class Program
 
             }
 
-            teljePositie.Insert(0, hoofd.xPos);
+            teljePositie.Insert(0, pixel.xPos);
 
-            teljePositie.Insert(1, hoofd.yPos);
+            teljePositie.Insert(1, pixel.yPos);
 
             teljePositie.RemoveAt(teljePositie.Count - 1);
 
@@ -241,7 +233,7 @@ class Program
 
             //Kollision mit Wände oder mit sich selbst
 
-            if (hoofd.xPos == 0 || hoofd.xPos == screenwidth - 1 || hoofd.yPos == 0 || hoofd.yPos == screenheight - 1)
+            if (pixel.xPos == 0 || pixel.xPos == screenwidth - 1 || pixel.yPos == 0 || pixel.yPos == screenheight - 1)
 
             {
 
@@ -267,7 +259,7 @@ class Program
 
             {
 
-                if (hoofd.xPos == telje[i] && hoofd.yPos == telje[i + 1])
+                if (pixel.xPos == telje[i] && pixel.yPos == telje[i + 1])
 
                 {
 
@@ -277,7 +269,7 @@ class Program
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
 
-                   //???
+                    //???
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
 
