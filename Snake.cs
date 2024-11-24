@@ -25,18 +25,21 @@ class Program
         List<int> fieldsPositions = new List<int>();
         fieldsPositions.Add(pixel.XPos);
         fieldsPositions.Add(pixel.YPos);
-        string obstacle = "*";
-        
-        int obstacleXpos = randomNumber.Next(1, screenWidth);
-        int obstacleYpos = randomNumber.Next(1, windowHeight);
+        Obstacle obstacle = new Obstacle
+        {
+            XPos = randomNumber.Next(1, screenWidth),
+            YPos = randomNumber.Next(1, windowHeight),
+            Character = "#",
+            Colour = ConsoleColor.DarkRed
+        };
         
         while (true)
         {
             Console.Clear();
             //Draw Obstacle
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.SetCursorPosition(obstacleXpos, obstacleYpos);
-            Console.Write(obstacle);
+            Console.SetCursorPosition(obstacle.XPos, obstacle.YPos);
+            Console.Write(obstacle.Character);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
@@ -97,6 +100,7 @@ class Program
             switch (movement)
             {
                 case "UP":
+                    pixel.YPos--;
                     break;
                 case "DOWN":
                     pixel.YPos++;
@@ -110,11 +114,11 @@ class Program
             }
 
             //Hindernis treffen
-            if (pixel.XPos == obstacleXpos && pixel.YPos == obstacleYpos)
+            if (pixel.XPos == obstacle.XPos && pixel.YPos == obstacle.YPos)
             {
                 score++;
-                obstacleXpos = randomNumber.Next(1, screenWidth);
-                obstacleYpos = randomNumber.Next(1, windowHeight);
+                obstacle.XPos= randomNumber.Next(1, screenWidth);
+                obstacle.YPos = randomNumber.Next(1, windowHeight);
             }
 
             fieldsPositions.Insert(0, pixel.XPos);
