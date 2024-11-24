@@ -1,13 +1,3 @@
-public class Pixel
+using study_ex2_snake;
 
-{
-
-    public int xPos { get; set; }
-
-    public int yPos { get; set; }
-
-    public ConsoleColor Colour { get; set; }
-
-    public string character { get; set; }
-
-}
+public class Pixel: ConsolePoint;

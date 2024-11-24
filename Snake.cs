@@ -4,291 +4,153 @@ using System.Linq;
 using System.Threading;
 
 class Program
-
 {
-
     static void Main()
-
     {
-
         Console.WindowHeight = 16;
-
         Console.WindowWidth = 32;
-
-        int screenwidth = Console.WindowWidth;
-
-        int screenheight = Console.WindowHeight;
-
-        Random randomnummer = new Random();
-
-        Pixel pixel = new Pixel();
-
-        pixel.xPos = screenwidth / 2;
-
-        pixel.yPos = screenheight / 2;
-
-        pixel.Colour = ConsoleColor.Red;
+        int screenWidth = Console.WindowWidth;
+        int windowHeight = Console.WindowHeight;
+        Random randomNumber = new Random();
+        Pixel pixel = new Pixel
+        {
+            XPos = screenWidth / 2,
+            YPos = windowHeight / 2,
+            Colour = ConsoleColor.Red
+        };
 
         string movement = "RIGHT";
-
-        List<int> telje = new List<int>();
-
+        List<int> fields = new List<int>();
         int score = 0;
-
-
-
-        List<int> teljePositie = new List<int>();
-
-
-
-        teljePositie.Add(pixel.xPos);
-
-        teljePositie.Add(pixel.yPos);
-
-
-
-        DateTime tijd = DateTime.Now;
-
+        List<int> fieldsPositions = new List<int>();
+        fieldsPositions.Add(pixel.XPos);
+        fieldsPositions.Add(pixel.YPos);
         Obstakel obstakel = new Obstakel();
-
-        obstakel.Xpos = randomnummer.Next(1, screenwidth);
-
-        obstakel.yPos = randomnummer.Next(1, screenheight);
-
+        
+        obstakel.Xpos = randomNumber.Next(1, screenWidth);
+        obstakel.yPos = randomNumber.Next(1, windowHeight);
+        
         while (true)
-
         {
-
             Console.Clear();
-
             //Draw Obstacle
-
             Console.ForegroundColor = ConsoleColor.Cyan;
-
             Console.SetCursorPosition(obstakel.Xpos, obstakel.yPos);
-
             Console.Write(obstakel);
-
-
-
             Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
-
+            Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
-
-
+            
             Console.ForegroundColor = ConsoleColor.White;
-
-            for (int i = 0; i < screenwidth; i++)
-
+            for (int i = 0; i < screenWidth; i++)
             {
-
                 Console.SetCursorPosition(i, 0);
-
                 Console.Write("■");
-
+            }
+            for (int i = 0; i < screenWidth; i++)
+            {
+                Console.SetCursorPosition(i, windowHeight - 1);
+                Console.Write("■");
             }
 
-            for (int i = 0; i < screenwidth; i++)
-
+            for (int i = 0; i < windowHeight; i++)
             {
-
-                Console.SetCursorPosition(i, screenheight - 1);
-
-                Console.Write("■");
-
-            }
-
-            for (int i = 0; i < screenheight; i++)
-
-            {
-
                 Console.SetCursorPosition(0, i);
-
                 Console.Write("■");
-
             }
 
-            for (int i = 0; i < screenheight; i++)
-
+            for (int i = 0; i < windowHeight; i++)
             {
-
-                Console.SetCursorPosition(screenwidth - 1, i);
-
+                Console.SetCursorPosition(screenWidth - 1, i);
                 Console.Write("■");
-
             }
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-
             Console.WriteLine("Score: " + score);
-
             Console.ForegroundColor = ConsoleColor.White;
-
             Console.Write("H");
-
-            for (int i = 0; i < telje.Count(); i++)
-
+            for (int i = 0; i < fields.Count(); i++)
             {
-
-                Console.SetCursorPosition(telje[i], telje[i + 1]);
-
+                Console.SetCursorPosition(fields[i], fields[i + 1]);
                 Console.Write("■");
-
             }
-
             //Draw Snake
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
-
+            Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
-
+            Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
-
+            Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
-            Console.SetCursorPosition(pixel.xPos, pixel.yPos);
-
+            Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
-
-
             ConsoleKeyInfo info = Console.ReadKey();
-
             //Game Logic
-
-            switch (info.Key)
-
+            movement = info.Key switch
             {
-
-                case ConsoleKey.UpArrow:
-
-                    movement = "UP";
-
+                ConsoleKey.UpArrow => "UP",
+                ConsoleKey.DownArrow => "DOWN",
+                ConsoleKey.LeftArrow => "LEFT",
+                ConsoleKey.RightArrow => "RIGHT",
+                _ => movement
+            };
+            
+            switch (movement)
+            {
+                case "UP":
                     break;
-
-                case ConsoleKey.DownArrow:
-
-                    movement = "DOWN";
-
+                case "DOWN":
+                    pixel.YPos++;
                     break;
-
-                case ConsoleKey.LeftArrow:
-
-                    movement = "LEFT";
-
+                case "LEFT":
+                    pixel.XPos--;
                     break;
-
-                case ConsoleKey.RightArrow:
-
-                    movement = "RIGHT";
-
+                case "RIGHT":
+                    pixel.XPos++;
                     break;
-
             }
-
-            if (movement == "UP")
-
-                pixel.yPos--;
-
-            if (movement == "DOWN")
-
-                pixel.yPos++;
-
-            if (movement == "LEFT")
-
-                pixel.xPos--;
-
-            if (movement == "RIGHT")
-
-                pixel.xPos++;
 
             //Hindernis treffen
-
-            if (pixel.xPos == obstakel.Xpos && pixel.yPos == obstakel.yPos)
-
+            if (pixel.XPos == obstakel.Xpos && pixel.YPos == obstakel.yPos)
             {
-
                 score++;
-
-                obstakel.Xpos= randomnummer.Next(1, screenwidth);
-
-                obstakel.yPos = randomnummer.Next(1, screenheight);
-
+                obstakel.Xpos= randomNumber.Next(1, screenWidth);
+                obstakel.yPos = randomNumber.Next(1, windowHeight);
             }
 
-            teljePositie.Insert(0, pixel.xPos);
-
-            teljePositie.Insert(1, pixel.yPos);
-
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-
+            fieldsPositions.Insert(0, pixel.XPos);
+            fieldsPositions.Insert(1, pixel.YPos);
+            fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
+            fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
             //Kollision mit Wände oder mit sich selbst
-
-            if (pixel.xPos == 0 || pixel.xPos == screenwidth - 1 || pixel.yPos == 0 || pixel.yPos == screenheight - 1)
-
+            if (pixel.XPos == 0 || pixel.XPos == screenWidth - 1 || pixel.YPos == 0 || pixel.YPos == windowHeight - 1)
             {
-
                 Console.Clear();
-
                 Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
-
+                Console.SetCursorPosition(screenWidth / 5, windowHeight / 2);
                 Console.WriteLine("Game Over");
-
-                Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
-
+                Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 1);
                 Console.WriteLine("Dein Score ist: " + score);
-
-                Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 2);
-
+                Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 2);
                 Environment.Exit(0);
-
             }
-
-            for (int i = 0; i < telje.Count(); i += 2)
-
+            for (int i = 0; i < fields.Count(); i += 2)
             {
-
-                if (pixel.xPos == telje[i] && pixel.yPos == telje[i + 1])
-
+                if (pixel.XPos == fields[i] && pixel.YPos == fields[i + 1])
                 {
-
                     Console.Clear();
-
                     Console.ForegroundColor = ConsoleColor.Red;
-
-                    Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
-
+                    Console.SetCursorPosition(screenWidth / 5, windowHeight / 2);
                     //???
-
-                    Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
-
+                    Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 1);
                     Console.WriteLine("Dein Score ist: " + score);
-
-                    Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 2);
-
+                    Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 2);
                     Environment.Exit(0);
-
                 }
-
             }
 
             Thread.Sleep(50);
-
         }
-
     }
-
 }
 
 

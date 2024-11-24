@@ -1,13 +1,3 @@
-public class Obstakel
+using study_ex2_snake;
 
-{
-
-    public int Xpos { get; set; }
-
-    public int yPos { get; set; }
-
-    public ConsoleColor Colour { get; set; }
-
-    public string character { get; set; }
-
-}
+public class Obstakel : ConsolePoint;
