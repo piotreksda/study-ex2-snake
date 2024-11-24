@@ -32,18 +32,17 @@ class Program
             Character = "#",
             Colour = ConsoleColor.DarkRed
         };
-
+        
         while (true)
         {
             Console.Clear();
-            //Narysuj przeszkodę
+            //Draw Obstacle
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(obstacle.XPos, obstacle.YPos);
             Console.Write(obstacle.Character);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
-
             Console.ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < screenWidth; i++)
             {
@@ -69,7 +68,7 @@ class Program
             }
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Wynik: " + score);
+            Console.WriteLine("Score: " + score);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("H");
             for (int i = 0; i < fields.Count(); i++)
@@ -77,8 +76,7 @@ class Program
                 Console.SetCursorPosition(fields[i], fields[i + 1]);
                 Console.Write("■");
             }
-
-            //Rysowanie węża
+            //Draw Snake
             Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
             Console.SetCursorPosition(pixel.XPos, pixel.YPos);
@@ -88,8 +86,7 @@ class Program
             Console.SetCursorPosition(pixel.XPos, pixel.YPos);
             Console.Write("■");
             ConsoleKeyInfo info = Console.ReadKey();
-
-            //Logika Gry
+            //Game Logic
             movement = info.Key switch
             {
                 ConsoleKey.UpArrow => "UP",
@@ -98,7 +95,7 @@ class Program
                 ConsoleKey.RightArrow => "RIGHT",
                 _ => movement
             };
-
+            
             switch (movement)
             {
                 case "UP":
@@ -115,7 +112,7 @@ class Program
                     break;
             }
 
-            //Uderzył w przeszkodę
+            //Hindernis treffen
             if (pixel.XPos == obstacle.XPos && pixel.YPos == obstacle.YPos)
             {
                 score++;
@@ -127,16 +124,15 @@ class Program
             fieldsPositions.Insert(1, pixel.YPos);
             fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
             fieldsPositions.RemoveAt(fieldsPositions.Count - 1);
-
-            //Kolizja ze ścianami lub z samym sobą
+            //Kollision mit Wände oder mit sich selbst
             if (pixel.XPos == 0 || pixel.XPos == screenWidth - 1 || pixel.YPos == 0 || pixel.YPos == windowHeight - 1)
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(screenWidth / 5, windowHeight / 2);
-                Console.WriteLine("Gra skończona");
+                Console.WriteLine("Game Over");
                 Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 1);
-                Console.WriteLine("Twój wynik to: " + score);
+                Console.WriteLine("Dein Score ist: " + score);
                 Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 2);
                 Environment.Exit(0);
             }
@@ -147,8 +143,9 @@ class Program
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(screenWidth / 5, windowHeight / 2);
+                    //???
                     Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 1);
-                    Console.WriteLine("Twój wynik to: " + score);
+                    Console.WriteLine("Dein Score ist: " + score);
                     Console.SetCursorPosition(screenWidth / 5, windowHeight / 2 + 2);
                     Environment.Exit(0);
                 }
